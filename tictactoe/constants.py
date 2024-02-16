@@ -1,0 +1,4 @@
+BOARD_SIZE_COL = 3
+BOARD_SIZE_ROW = 3
+GAME_ON = True
+
