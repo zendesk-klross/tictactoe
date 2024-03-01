@@ -13,14 +13,11 @@ class TicTacToe:
         print(self.board)
         while True:
             move = input("Your move: ")
-            move_position = np.where(board == move)
-            self.board[move_position] = "X"
+            move_position = np.where(self.board.grid == move)
+            self.board.grid[move_position] = "X"
             print ("Moved to {}".format(move_position))
             print ("=============================")
             print(self.board)
-
-
-
 
 board = Board()
 game = TicTacToe(board)
