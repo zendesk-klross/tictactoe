@@ -8,10 +8,10 @@ class Board:
         self.col = col
         self.row = row
         self.grid = np.array([str(i) for i in range(1, self.col*self.row + 1)]).reshape(self.col, self.row)
-
+    
     def __repr__(self):
         return str(self.grid)
-
+    
     def __setitem__(self, key, value):
         self.grid[key] = value
 
@@ -33,9 +33,8 @@ class Board:
             return "O wins!"
 
         # Check for a tie (no numbers left, meaning all cells are filled with 'X' or 'O')
-        # @TODO: We need to fix this pls
-        # elif not np.any(self.flatten().astype(str).isdigit()):
-        #     return "Tie, no one wins :("
+        if not np.any([cell.isdigit() for cell in self.grid.flatten()]):
+            return "Tie, no one wins :("
 
         # No winner yet
         return None
