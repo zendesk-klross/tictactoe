@@ -19,7 +19,7 @@ class TicTacToe:
             current_player = self.player2 if self.turn else self.player1
             print("Turn: {}".format(current_player.name))
             move = input("Your move: ")
-            move_position = np.where(self.board.board == move)
+            move_position = np.where(self.board.grid == move)
             self.board.make_move(move_position, current_player.token)
             self.turn = 0 if self.turn else 1
             print ("Moved to {}".format(move_position))
