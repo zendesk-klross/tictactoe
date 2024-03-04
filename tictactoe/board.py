@@ -3,7 +3,6 @@ from typing import Optional
 
 
 class Board:
-
     def __init__(self, col:int=3, row:int=3):
         self.col = col
         self.row = row
@@ -17,6 +16,13 @@ class Board:
 
     def __getitem__(self, key):
         return self.grid[key]
+
+    def __str__(self):
+        pretty_grid = np.where((self.grid != 'X') & (self.grid != 'O'), ' ', self.grid)
+        return '\n'.join(' | '.join(row) for row in pretty_grid)
+
+    def make_move(self, position, move):
+        self.grid[position] = move
 
     def check_winner(self) -> Optional[str]:
         # Check rows and columns for a winner
