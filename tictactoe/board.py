@@ -12,6 +12,9 @@ class Board:
     def __repr__(self):
         return str(self.board)
 
+    def make_move(self, position, move):
+        self.board[position] = move
+
     def check_winner(self) -> Optional[str]:
         # Check rows and columns for a winner
         for i in self.shape[0]:
