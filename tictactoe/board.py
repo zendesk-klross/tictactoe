@@ -3,8 +3,6 @@ from typing import Optional
 
 
 class Board:
-
-    # @TODO: Write a setter for the board cell values
     def __init__(self, col:int=3, row:int=3):
         self.col = col
         self.row = row
