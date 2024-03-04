@@ -10,6 +10,10 @@ class Board:
     def __repr__(self):
         return str(self.board)
 
+    def __str__(self):
+        pretty_board = np.where((self.board != 'X') & (self.board != 'O'), ' ', self.board)
+        return '\n'.join(' | '.join(row) for row in pretty_board)
+
     def make_move(self, position, move):
         self.board[position] = move
 

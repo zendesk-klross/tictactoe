@@ -13,8 +13,9 @@ class TicTacToe:
 
     def play(self):
         print("TicTacToe <3")
-        print(self.board)
+        print(self.board.__repr__())
         while True:
+            # self.board.check_winner()
             current_player = self.player2 if self.turn else self.player1
             print("Turn: {}".format(current_player.name))
             move = input("Your move: ")
@@ -23,10 +24,11 @@ class TicTacToe:
             self.turn = 0 if self.turn else 1
             print ("Moved to {}".format(move_position))
             print ("=============================")
-            print(self.board)
+            print(self.board.__str__())
 
 board = Board()
 player1 = Player("X", "Player1")
 player2 = Player("O", "Player2")
 game = TicTacToe(board, player1, player2)
 game.play()
+
