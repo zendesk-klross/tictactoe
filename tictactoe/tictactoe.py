@@ -16,20 +16,24 @@ class TicTacToe:
         print(self.board.__repr__())
         while self.is_played:
             current_player = self.player2 if self.turn else self.player1
-            print(self.board.__str__())
+            print(self.board)
             end_game = self.board.check_winner()
             if end_game:
                 print(end_game)
                 self.is_played = False
             
             else:
-                print("Turn: {}".format(current_player.name))
-                move = input("Your move: ")
-                move_position = np.where(self.board.grid == move)
-                self.board.make_move(move_position, current_player.token)
-                self.turn = 0 if self.turn else 1
-                print ("Moved to {}".format(move_position))
-                print ("=============================")
+                while True:
+                    print("Turn: {}".format(current_player.name))
+                    move = input("Your move: ")
+                    make_move = self.board.make_move(move, current_player.token)
+                    if make_move:
+                        self.turn = 0 if self.turn else 1
+                        print("Moved to {}".format(move))
+                        print("=============================")
+                        break
+                    else:
+                        print("Please make a different move.")
 
 board = Board()
 player1 = Player("X", "Player1")
