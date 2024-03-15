@@ -1,7 +1,10 @@
 class Player:
-    def __init__(self, token:str, name:str="Player", turn:bool=False):
+    def __init__(self, token:str, name:str="Player", human:bool=True):
         self.token = token
         self.name = name
+        self.human = human
+
+
 
 
 # Winner?

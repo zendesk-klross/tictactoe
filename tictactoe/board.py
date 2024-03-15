@@ -21,7 +21,14 @@ class Board:
         pretty_grid = np.where((self.grid != 'X') & (self.grid != 'O'), ' ', self.grid)
         return '\n'.join(' | '.join(row) for row in pretty_grid)
     
-
+    def available_cells(self):
+        available_cells = []
+        for row in self.grid:
+            for elem in row:
+                if str(elem).isdigit():
+                    available_cells.append(elem)
+        return available_cells
+    
     def make_move(self, move, token):
         if move.isdigit() and 1 <= int(move) <= self.row * self.col + 1:
             position = np.where(self.grid == move)
@@ -33,8 +40,6 @@ class Board:
         else:
             print('Please choose a valid number.')
         return False
-
-        
 
     def check_winner(self) -> Optional[str]:
         # Check rows and columns for a winner

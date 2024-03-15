@@ -1,6 +1,7 @@
 import numpy as np
 from board import Board
 from player import Player
+import random
 
 class TicTacToe:
 
@@ -25,7 +26,13 @@ class TicTacToe:
             else:
                 while True:
                     print("Turn: {}".format(current_player.name))
-                    move = input("Your move: ")
+                    available_cells = self.board.available_cells()
+                    print(available_cells)
+                    if current_player.human:
+                        move = input("Your move: ")
+                    else:
+                        move = random.choice(available_cells)
+
                     make_move = self.board.make_move(move, current_player.token)
                     if make_move:
                         self.turn = 0 if self.turn else 1
@@ -37,7 +44,7 @@ class TicTacToe:
 
 board = Board()
 player1 = Player("X", "Player1")
-player2 = Player("O", "Player2")
+player2 = Player("O", "Player2", human=False)
 game = TicTacToe(board, player1, player2)
 game.play()
 
