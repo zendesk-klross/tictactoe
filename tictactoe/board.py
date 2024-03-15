@@ -20,9 +20,21 @@ class Board:
     def __str__(self):
         pretty_grid = np.where((self.grid != 'X') & (self.grid != 'O'), ' ', self.grid)
         return '\n'.join(' | '.join(row) for row in pretty_grid)
+    
 
-    def make_move(self, position, move):
-        self.grid[position] = move
+    def make_move(self, move, token):
+        if move.isdigit() and 1 <= int(move) <= self.row * self.col + 1:
+            position = np.where(self.grid == move)
+            if len(position[0]) > 0:
+                self.grid[position] = token
+                return True
+            else:
+                print('That cell is already occupied.')
+        else:
+            print('Please choose a valid number.')
+        return False
+
+        
 
     def check_winner(self) -> Optional[str]:
         # Check rows and columns for a winner
