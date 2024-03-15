@@ -7,7 +7,13 @@ class Board:
         self.col = col
         self.row = row
         self.grid = np.array([str(i) for i in range(1, self.col*self.row + 1)]).reshape(self.col, self.row)
-    
+
+    def __setitem__(self, key, value):
+        self.grid[key] = value
+
+    def __getitem__(self, key):
+        return self.grid[key]
+
     def __repr__(self):
         return str(self.grid)
 
