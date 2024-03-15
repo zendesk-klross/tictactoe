@@ -1,4 +1,5 @@
 import pytest
+
 from tictactoe.board import Board
 from tictactoe.player import Player
 from tictactoe.tictactoe import TicTacToe
