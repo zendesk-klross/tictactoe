@@ -1,5 +1,5 @@
 class Player:
-    def __init__(self, token:str, name:str="Player", turn:bool=False):
+    def __init__(self, token:str, name:str="Player"):
         self.token = token
         self.name = name
 
