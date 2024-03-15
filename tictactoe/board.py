@@ -10,12 +10,6 @@ class Board:
     
     def __repr__(self):
         return str(self.grid)
-    
-    def __setitem__(self, key, value):
-        self.grid[key] = value
-
-    def __getitem__(self, key):
-        return self.grid[key]
 
     def __str__(self):
         pretty_grid = np.where((self.grid != 'X') & (self.grid != 'O'), ' ', self.grid)
