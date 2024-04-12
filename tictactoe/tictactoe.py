@@ -2,6 +2,8 @@ import numpy as np
 from board import Board
 from player import Player
 from iohandler import IOHandler
+import random
+
 
 class TicTacToe:
 
@@ -25,17 +27,29 @@ class TicTacToe:
                 self.is_played = False
             
             else:
-                self.io.output("Turn: {}".format(current_player.name))
-                move = self.io.input("Your move: ")
-                move_position = np.where(self.board.grid == move)
-                self.board.make_move(move_position, current_player.token)
-                self.turn = 0 if self.turn else 1
-                self.io.output ("=============================")
+                while True:
+                    self.io.output("Turn: {}".format(current_player.name))
+                    available_cells = self.board.available_cells()
+                    self.io.output(available_cells)
+                    if current_player.human:
+                        move = self.io.input("Your move: ")
+                    else:
+                        move = random.choice(available_cells)
+
+                    make_move = self.board.make_move(move, current_player.token)
+                    if make_move:
+                        self.turn = 0 if self.turn else 1
+                        self.io.output("Moved to {}".format(move))
+                        self.io.output("=============================")
+                        break
+                    else:
+                        self.io.output("Please make a different move.")
 
 board = Board()
 player1 = Player("X", "Player1")
-player2 = Player("O", "Player2")
+player2 = Player("O", "Player2", human=False)
 io = IOHandler()
 game = TicTacToe(board, player1, player2, io)
+
 game.play()
 
