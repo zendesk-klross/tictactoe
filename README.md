@@ -1,8 +1,8 @@
 # tictactoe
 
-- Analysis for tie - Ana
-~~- Tests - Ana~~
+- Analysis for tie
+- ~~Tests - Ana~~
 - Customizable board
 
-~~- Front end~~
+- ~~Front end~~
 - Better CLI UI
