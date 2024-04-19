@@ -1,5 +1,6 @@
 import click
 import os
+import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 
@@ -35,7 +36,13 @@ class IOHandler:
     @staticmethod
     def pretty_print_grid(grid):
         for row in grid:
-            colored_row = [' | '.join([click.style(cell, fg='red') if cell == 'X' else click.style(cell, fg='green') if cell == 'O' else click.style(cell, fg='bright_black') if cell.isdigit() else cell for cell in row])]
+            colored_row = [' | '.join([click.style(cell, fg='magenta') if cell == 'X' else click.style(cell, fg='cyan') if cell == 'O' else click.style(cell, fg='bright_black') if cell.isdigit() else cell for cell in row])]
             click.echo('-' * (len(row) * 4 + 1))
             click.echo('| ' + colored_row[0] + ' |')
             click.echo('-' * (len(row) * 4 + 1))
+
+    @staticmethod
+    def progress_bar(message):
+        with click.progressbar(range(70), label=message) as bar:
+            for item in bar:
+                time.sleep(0.02)

@@ -14,13 +14,6 @@ class Board:
     def __getitem__(self, key):
         return self.grid[key]
 
-    def __repr__(self):
-        return str(self.grid)
-
-    def __str__(self):
-        pretty_grid = np.where((self.grid != 'X') & (self.grid != 'O'), ' ', self.grid)
-        return '\n'.join(' | '.join(row) for row in pretty_grid)
-    
     def available_cells(self):
         available_cells = []
         for row in self.grid:
