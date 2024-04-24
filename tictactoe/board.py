@@ -34,19 +34,19 @@ class Board:
             print('Please choose a valid number.')
         return False
 
-    def check_winner(self) -> Optional[str]:
+    def check_winner(self, token1, token2) -> Optional[str]:
         # Check rows and columns for a winner
         for i in range(self.grid.shape[0]):
-            if np.all(self[i, :] == "X") or np.all(self.grid[:, i] == "X"):
-                return "X wins!"
-            elif np.all(self.grid[i, :] == "O") or np.all(self.grid[:, i] == "O"):
-                return "O wins!"
+            if np.all(self[i, :] == token1) or np.all(self.grid[:, i] == token1):
+                return f"{token1} wins!"
+            elif np.all(self.grid[i, :] == token2) or np.all(self.grid[:, i] == token2):
+                return f"{token2} wins!"
 
         # Check diagonals for a winner
-        if np.all(np.diag(self.grid) == "X") or np.all(np.diag(np.fliplr(self.grid)) == "X"):
-            return 'X wins!'
-        if np.all(np.diag(self.grid) == "O") or np.all(np.diag(np.fliplr(self.grid)) == "O"):
-            return "O wins!"
+        if np.all(np.diag(self.grid) == token1) or np.all(np.diag(np.fliplr(self.grid)) == token1):
+            return f"{token1} wins!"
+        if np.all(np.diag(self.grid) == token2) or np.all(np.diag(np.fliplr(self.grid)) == token2):
+            return f"{token2} wins!"
 
         # Check for a tie (no numbers left, meaning all cells are filled with 'X' or 'O')
         if not np.any([cell.isdigit() for cell in self.grid.flatten()]):

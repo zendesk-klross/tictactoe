@@ -16,17 +16,14 @@ class TicTacToe:
         self.io = io
         self.turn = turn
 
-    def exit(self):
-        sys.exit(0)
-
     def play(self):
         while self.is_played:
             current_player = self.player2 if self.turn else self.player1
-            end_game = self.board.check_winner()
+            end_game = self.board.check_winner(self.player1.token, self.player2.token)
             if end_game:
+                self.io.pretty_print_grid(self.board.grid)
                 self.io.output(end_game)
                 self.is_played = False
-            
             else:
                 while True:
                     self.io.clear_screen()
