@@ -35,11 +35,15 @@ class IOHandler:
 
     @staticmethod
     def pretty_print_grid(grid):
+        cell_width = 4
         for row in grid:
-            colored_row = [' | '.join([click.style(cell, fg='magenta') if cell == 'X' else click.style(cell, fg='cyan') if cell == 'O' else click.style(cell, fg='bright_black') if cell.isdigit() else cell for cell in row])]
-            click.echo('-' * (len(row) * 4 + 1))
+            colored_row = [' | '.join([click.style(cell.ljust(cell_width), fg='magenta') if cell == 'X'
+                                       else click.style(cell.ljust(cell_width), fg='cyan') if cell == 'O'
+            else click.style(cell.ljust(cell_width), fg='bright_black') if cell.isdigit()
+            else cell.ljust(cell_width) for cell in row])]
+            click.echo('-' * (len(row) * (cell_width + 3) + 1))
             click.echo('| ' + colored_row[0] + ' |')
-            click.echo('-' * (len(row) * 4 + 1))
+            click.echo('-' * (len(row) * (cell_width + 3) + 1))
 
     @staticmethod
     def progress_bar(message):

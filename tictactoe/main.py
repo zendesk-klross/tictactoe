@@ -99,15 +99,17 @@ def startup(io=IOHandler()):
 startup()
 
 # TODO:
-# 2. Make bigger cells so that bigger boards print nicer
-# 3. Make computer an instance of the player class,take the logic out of the main game
-# 4. Take printing out of the game class alltogether
-# 5. Check winner bugs:
+
+# 2. Refactor:
+#   - Make computer an instance of the player class,take the logic out of the main game
+#   - Take printing out of the game class
+# 3. Check winner bugs:
 #   - With uneven boards, diagonal check is weird: example 2x8, win is 2,10
 #       > Different rules for non-square boards?
 #   - If h > w, errors out: IndexError: index 3 is out of bounds for axis 1 with size 3
-# 6. Error handling on input
-# 7. Custom token support:
+# 4. Error handling on input
+# 5. Custom token support:
 #   - Take printing X wins / 0 wins out of the winner check
 #   - Amend winner check to detect win with any token
+# 6. Add tests
 
