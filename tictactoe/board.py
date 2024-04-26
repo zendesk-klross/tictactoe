@@ -1,5 +1,6 @@
 import numpy as np
 from typing import Optional
+from errors import *
 
 
 class Board:
@@ -29,9 +30,9 @@ class Board:
                 self.grid[position] = token
                 return True
             else:
-                print('That cell is already occupied.')
+                raise InvalidMoveError('That cell is already occupied.')
         else:
-            print('Please choose a valid number.')
+            raise InvalidMoveError('Please choose a valid number.')
         return False
 
     def check_winner(self, token1, token2) -> Optional[str]:

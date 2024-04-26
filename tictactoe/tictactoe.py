@@ -5,6 +5,7 @@ import random
 from board import Board
 from player import Player
 from iohandler import IOHandler
+from errors import *
 
 class TicTacToe:
 
@@ -26,7 +27,9 @@ class TicTacToe:
                 self.is_played = False
             else:
                 while True:
+                    error = None
                     self.io.clear_screen()
+                    self.io.output(error) if error else None
                     self.io.output("Turn: {}".format(current_player.name))
                     self.io.pretty_print_grid(self.board.grid)
                     available_cells = self.board.available_cells()
@@ -35,11 +38,11 @@ class TicTacToe:
                     else:
                         self.io.progress_bar("Thinking ")
                         move = random.choice(available_cells)
-
-                    make_move = self.board.make_move(move, current_player.token)
-                    if make_move:
-                        self.turn = 0 if self.turn else 1
-                        break
-                    else:
-                        self.io.output("Please make a different move.")
+                    try:
+                        make_move = self.board.make_move(move, current_player.token)
+                        if make_move:
+                            self.turn = 0 if self.turn else 1
+                            break
+                    except InvalidMoveError as e:
+                        error = str(e)
 
