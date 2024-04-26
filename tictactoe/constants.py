@@ -1,4 +1,4 @@
-STARTUP_OPTS = ["Play in default mode",
+STARTUP_OPTS = ["Play",
                 "Customize board size",
                 "Select game mode",
                 "Exit"]

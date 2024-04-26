@@ -31,11 +31,8 @@ class TicTacToe:
                     self.io.pretty_print_grid(self.board.grid)
                     available_cells = self.board.available_cells()
                     if current_player.human:
-                        move = self.io.input("Your move: ")
+                        move = self.io.input("Your move")
                     else:
-                        self.io.clear_screen()
-                        self.io.output("Turn: Computer")
-                        self.io.pretty_print_grid(self.board.grid)
                         self.io.progress_bar("Thinking ")
                         move = random.choice(available_cells)
 

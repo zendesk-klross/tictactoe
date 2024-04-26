@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class Board:
-    def __init__(self, col:int=3, row:int=3):
+    def __init__(self, col:int, row:int):
         self.col = col
         self.row = row
         self.grid = np.array([str(i) for i in range(1, self.col*self.row + 1)]).reshape(self.col, self.row)
