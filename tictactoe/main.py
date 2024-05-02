@@ -15,9 +15,9 @@ def startup(io=IOHandler()):
     io.output_from_file("tictactoe/assets/hero_text.txt")
 
     while True:
-        io.output("Player1 is {}".format(player1.name if player1 else "not set"))
-        io.output("Player2 is {}".format(player2.name if player2 else "not set"))
-        player_choice = io.input_options("Press space > ", STARTUP_OPTS).strip()
+        io.output("Player1 is {}".format(player1.name if player1 else "Player"))
+        io.output("Player2 is {}".format(player2.name if player2 else "Computer"))
+        player_choice = io.input_options("Press space for options > ", STARTUP_OPTS).strip()
 
         # EXIT
         if player_choice == STARTUP_OPTS[3]:
@@ -71,13 +71,12 @@ def startup(io=IOHandler()):
                 if not token1: token1 = "X"
                 if not token2: token2 = "O"
 
-                if token1 == "X":
-                    player1 = Player(token1, name1, human=True)
-                    player2 = Player(token2, name2, human=True)
-                else:
+                if token1 == "O":
                     player1 = Player(token2, name2, human=True)
                     player2 = Player(token1, name1, human=True)
-
+                else:
+                    player1 = Player(token1, name1, human=True)
+                    player2 = Player(token2, name2, human=True)
             continue
 
         # START GAME
@@ -92,9 +91,11 @@ def startup(io=IOHandler()):
         board = Board(int(board_width), int(board_height))
         game = TicTacToe(board, player1, player2, io)
 
-        io.output("\nTo make a move, type the number of the cell you want to place your token in.\n")
         game.play()
-        break
+        replay = io.input_options("Play again? ", ["Yes", "No"]).strip()
+        if replay == "No":
+            io.output("\nThanks for playing <3")
+            break
 
 startup()
 
@@ -102,14 +103,13 @@ startup()
 
 # 2. Refactor:
 #   - Make computer an instance of the player class,take the logic out of the main game
-#   - Take printing out of the game class
 # 3. Check winner bugs:
 #   - With uneven boards, diagonal check is weird: example 2x8, win is 2,10
 #       > Different rules for non-square boards?
 #   - If h > w, errors out: IndexError: index 3 is out of bounds for axis 1 with size 3
 # 4. Error handling on input
+#   - When press Enter, exits the programme
 # 5. Custom token support:
 #   - Take printing X wins / 0 wins out of the winner check
-#   - Amend winner check to detect win with any token
 # 6. Add tests
 

@@ -34,11 +34,11 @@ class IOHandler:
         click.clear()
 
     @staticmethod
-    def pretty_print_grid(grid):
+    def pretty_print_grid(grid, token1, token2):
         cell_width = 4
         for row in grid:
-            colored_row = [' | '.join([click.style(cell.ljust(cell_width), fg='magenta') if cell == 'X'
-                                       else click.style(cell.ljust(cell_width), fg='cyan') if cell == 'O'
+            colored_row = [' | '.join([click.style(cell.ljust(cell_width), fg='magenta') if cell == token1
+                                       else click.style(cell.ljust(cell_width), fg='cyan') if cell == token2
             else click.style(cell.ljust(cell_width), fg='bright_black') if cell.isdigit()
             else cell.ljust(cell_width) for cell in row])]
             click.echo('-' * (len(row) * (cell_width + 3) + 1))

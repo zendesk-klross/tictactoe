@@ -1,5 +1,3 @@
-import sys
-
 import numpy as np
 import random
 from board import Board
@@ -20,18 +18,22 @@ class TicTacToe:
     def play(self):
         while self.is_played:
             current_player = self.player2 if self.turn else self.player1
-            end_game = self.board.check_winner(self.player1.token, self.player2.token)
-            if end_game:
-                self.io.pretty_print_grid(self.board.grid)
-                self.io.output(end_game)
+            winner = self.get_winner()
+            if winner:
+                self.io.clear_screen()
+                self.io.pretty_print_grid(self.board.grid, self.player1.token, self.player2.token)
+                self.io.output(f"{winner.name} wins!🎉")
                 self.is_played = False
             else:
                 while True:
                     error = None
+
                     self.io.clear_screen()
                     self.io.output(error) if error else None
                     self.io.output("Turn: {}".format(current_player.name))
-                    self.io.pretty_print_grid(self.board.grid)
+                    self.io.output("\nTo make a move, type the number of the cell you want to place your token in.\n")
+                    self.io.pretty_print_grid(self.board.grid, self.player1.token, self.player2.token)
+
                     available_cells = self.board.available_cells()
                     if current_player.human:
                         move = self.io.input("Your move")
@@ -46,3 +48,11 @@ class TicTacToe:
                     except InvalidMoveError as e:
                         error = str(e)
 
+    def get_winner(self):
+        winning_token = self.board.check_winner(self.player1.token, self.player2.token)
+        if winning_token == self.player1.token:
+            return self.player1
+        elif winning_token == self.player2.token:
+            return self.player2
+        else:
+            return None

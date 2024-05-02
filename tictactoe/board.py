@@ -39,19 +39,19 @@ class Board:
         # Check rows and columns for a winner
         for i in range(self.grid.shape[0]):
             if np.all(self[i, :] == token1) or np.all(self.grid[:, i] == token1):
-                return f"{token1} wins!"
+                return token1
             elif np.all(self.grid[i, :] == token2) or np.all(self.grid[:, i] == token2):
-                return f"{token2} wins!"
+                return token2
 
         # Check diagonals for a winner
         if np.all(np.diag(self.grid) == token1) or np.all(np.diag(np.fliplr(self.grid)) == token1):
-            return f"{token1} wins!"
+            return token1
         if np.all(np.diag(self.grid) == token2) or np.all(np.diag(np.fliplr(self.grid)) == token2):
-            return f"{token2} wins!"
+            return token2
 
         # Check for a tie (no numbers left, meaning all cells are filled with 'X' or 'O')
         if not np.any([cell.isdigit() for cell in self.grid.flatten()]):
-            return "Tie, no one wins :("
+            return None
 
         # No winner yet
         return None
