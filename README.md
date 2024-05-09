@@ -1,8 +1,7 @@
 # tictactoe
 
-- Analysis for tie
+- Smart computer
 - ~~Tests - Ana~~
-- Customizable board
-
+- ~~Customizable board~~
 - ~~Front end~~
-- Better CLI UI
+- ~~Better CLI UI~~
