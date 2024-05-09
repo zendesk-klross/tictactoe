@@ -1,6 +1,6 @@
 import numpy as np
 from typing import Optional
-from errors import *
+from .errors import InvalidMoveError
 
 
 class Board:
@@ -55,3 +55,10 @@ class Board:
 
         # No winner yet
         return None
+
+    def is_game_over(self):
+        winner = self.check_winner("X", "O")
+        if (winner or not self.available_cells()): return True
+        else: return False
+
+
