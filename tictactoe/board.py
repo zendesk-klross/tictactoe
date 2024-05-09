@@ -37,7 +37,7 @@ class Board:
 
     def check_winner(self, token1, token2) -> Optional[str]:
         # Check rows and columns for a winner
-        for i in range(self.grid.shape[0]):
+        for i in range(min(self.grid.shape)):
             if np.all(self[i, :] == token1) or np.all(self.grid[:, i] == token1):
                 return token1
             elif np.all(self.grid[i, :] == token2) or np.all(self.grid[:, i] == token2):

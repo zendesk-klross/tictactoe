@@ -22,7 +22,10 @@ class TicTacToe:
             if winner:
                 self.io.clear_screen()
                 self.io.pretty_print_grid(self.board.grid, self.player1.token, self.player2.token)
-                self.io.output(f"{winner.name} wins!🎉")
+                if winner.name == "Player":
+                    self.io.output(f"You win!🎉")
+                else:
+                    self.io.output(f"{winner.name} wins!🎉")
                 self.is_played = False
             else:
                 while True:

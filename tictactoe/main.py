@@ -33,7 +33,6 @@ def startup(io=IOHandler()):
                 board_height = io.input("Enter board height")
             else:
                 board_width, board_height = board_size.split("x")
-            # board = Board(int(board_width), int(board_height))
             io.output("\nBoard size set to {}x{}\n".format(board_width, board_height))
             continue
 
@@ -88,7 +87,7 @@ def startup(io=IOHandler()):
             if not player2:
                 player2 = Player("O", "Computer", human=False)
 
-        board = Board(int(board_width), int(board_height))
+        board = Board(int(board_height), int(board_width))
         game = TicTacToe(board, player1, player2, io)
 
         game.play()
@@ -106,10 +105,7 @@ startup()
 # 3. Check winner bugs:
 #   - With uneven boards, diagonal check is weird: example 2x8, win is 2,10
 #       > Different rules for non-square boards?
-#   - If h > w, errors out: IndexError: index 3 is out of bounds for axis 1 with size 3
 # 4. Error handling on input
 #   - When press Enter, exits the programme
-# 5. Custom token support:
-#   - Take printing X wins / 0 wins out of the winner check
 # 6. Add tests
 
