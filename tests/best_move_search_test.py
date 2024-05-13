@@ -54,4 +54,3 @@ class TestBestMoveSearch:
         assert "9" not in self.best_move_search.untried_actions()
         for i in range(1, 9):
             assert str(i) in self.best_move_search.untried_actions()
-            

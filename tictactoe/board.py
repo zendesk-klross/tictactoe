@@ -49,7 +49,7 @@ class Board:
         if np.all(np.diag(self.grid) == token2) or np.all(np.diag(np.fliplr(self.grid)) == token2):
             return token2
 
-        # Check for a tie (no numbers left, meaning all cells are filled with 'X' or 'O')
+        # Check for a tie (no numbers left, meaning all cells are filled)
         if not np.any([cell.isdigit() for cell in self.grid.flatten()]):
             return -1
 
