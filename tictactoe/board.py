@@ -28,7 +28,7 @@ class Board:
             position = np.where(self.grid == move)
             if len(position[0]) > 0:
                 self.grid[position] = token
-                return True
+                return self
             else:
                 raise InvalidMoveError('That cell is already occupied.')
         else:

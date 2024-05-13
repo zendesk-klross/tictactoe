@@ -38,3 +38,20 @@ class TestBestMoveSearch:
 
         self.best_move_search._number_of_visits = 5
         assert self.best_move_search.times_visited() == 5
+
+    def test_expand(self):
+        # Initial list of children is empty
+        assert len(self.best_move_search.children) == 0
+
+        child_node = self.best_move_search.expand()
+        # After expand, there is 1 child, whose parent is previous move
+        # and action is previous action
+        assert len(self.best_move_search.children) == 1
+        assert child_node.parent == self.best_move_search
+        assert child_node.parent_action == "9"
+
+        # Check if the untried actions have been updated
+        assert "9" not in self.best_move_search.untried_actions()
+        for i in range(1, 9):
+            assert str(i) in self.best_move_search.untried_actions()
+            
