@@ -42,4 +42,3 @@ def test_tie(board):
                            ['O', 'X', 'O']])
     assert board.check_winner('X', 'O') is None
 
-    

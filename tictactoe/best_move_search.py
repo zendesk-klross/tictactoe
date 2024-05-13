@@ -31,6 +31,7 @@ class BestMoveSearch:
     def times_visited(self):
         return self._number_of_visits
 
+    # Populate list of child nodes with all possible moves
     def expand(self):
         action = self._untried_actions.pop()
         next_state = self.board.make_move(action, "X")
@@ -40,7 +41,8 @@ class BestMoveSearch:
         self.children.append(child_node)
         return child_node
 
-
+    def is_expanded(self):
+        return len(self._untried_actions) == 0
 
 
 
