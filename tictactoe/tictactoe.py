@@ -1,9 +1,9 @@
 import numpy as np
 import random
-from board import Board
-from player import Player
-from iohandler import IOHandler
-from errors import *
+from .board import Board
+from .player import Player
+from .iohandler import IOHandler
+from .errors import *
 
 class TicTacToe:
 
@@ -14,10 +14,10 @@ class TicTacToe:
         self.player2 = player2
         self.io = io
         self.turn = turn
+        self.current_player = self.player1 if self.turn == 0 else self.player2
 
     def play(self):
         while self.is_played:
-            current_player = self.player2 if self.turn else self.player1
             winner = self.get_winner()
             if winner:
                 self.io.clear_screen()
@@ -35,18 +35,18 @@ class TicTacToe:
 
                     self.io.clear_screen()
                     self.io.output(error) if error else None
-                    self.io.output("Turn: {}".format(current_player.name))
+                    self.io.output("Turn: {}".format(self.current_player.name))
                     self.io.output("\nTo make a move, type the number of the cell you want to place your token in.\n")
                     self.io.pretty_print_grid(self.board.grid, self.player1.token, self.player2.token)
 
                     available_cells = self.board.available_cells()
-                    if current_player.human:
+                    if self.current_player.human:
                         move = self.io.input("Your move")
                     else:
                         self.io.progress_bar("Thinking ")
                         move = random.choice(available_cells)
                     try:
-                        make_move = self.board.make_move(move, current_player.token)
+                        make_move = self.board.make_move(move, self.current_player.token)
                         if make_move:
                             self.turn = 0 if self.turn else 1
                             break
@@ -63,3 +63,11 @@ class TicTacToe:
             return -1
         else:
             return None
+
+    # This is for simulation purposes, so that playouts can happen
+    # without exiting the game
+    def is_game_over(self):
+        winner = self.board.check_winner(self.player1.token, self.player2.token)
+        if (winner or not self.board.available_cells()): return True
+        else: return False
+
