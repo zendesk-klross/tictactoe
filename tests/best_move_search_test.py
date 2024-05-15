@@ -89,5 +89,20 @@ class TestBestMoveSearch:
 
         assert self.best_move_search.simulate_playthrough() is None
 
+    def test_update_stats(self):
+        self.best_move_search.update_stats(1)
+        assert self.best_move_search._number_of_visits == 1
+        assert self.best_move_search._results[1] == 1
+
+        self.best_move_search.update_stats(-1)
+        assert self.best_move_search._number_of_visits == 2
+        assert self.best_move_search._results[-1] == 1
+
+        self.best_move_search.update_stats(0)
+        assert self.best_move_search._number_of_visits == 3
+        assert self.best_move_search._results[0] == 1
+
+
+
 
 

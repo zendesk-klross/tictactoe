@@ -49,6 +49,8 @@ class BestMoveSearch:
     def is_expanded(self):
         return len(self._untried_actions) == 0
 
+    # this is the "rollout" of the game. I am calling it so
+    # to better understand what I am doing
     def simulate_playthrough(self):
         current_board = self.game.board
         while not self.game.is_game_over():
@@ -57,5 +59,11 @@ class BestMoveSearch:
             current_board = current_board.make_move(move, self.game.current_player.token)
         return current_board.check_winner("X", "O")
 
-
+    # Backpropagate the result of the game to the root node
+    def update_stats(self, result):
+        self._number_of_visits += 1
+        self._results[result] += 1
+        if self.parent:
+            self.parent.update_stats(result)
+        return
 
