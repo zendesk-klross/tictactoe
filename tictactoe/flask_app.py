@@ -32,5 +32,53 @@ def setup():
     return render_template('setup.html')
 
 
+@app.route('/play', methods=['GET', 'POST'])
+def play():
+    # Retrieve the serialized game data from the session
+    game_data = session.get('game_data')
+    if not game_data:
+        return redirect(url_for('setup'))
+
+    # Reconstruct the TicTacToe object from the game data
+    game = TicTacToe.from_dict(game_data, IOHandler())
+    message = None
+    error = None
+
+    if request.method == 'POST':
+        move = request.form.get('move')
+        current_player = game.player2 if game.turn else game.player1
+
+        if current_player.human:
+            if move and move.isdigit() and move in game.board.available_cells():
+                try:
+                    game.board.make_move(move, current_player.token)
+                    game.turn = 1 - game.turn  # Switch turns
+                except InvalidMoveError as e:
+                    error = str(e)
+            else:
+                error = "Invalid move! Please try again."
+        else:
+            # TODO
+            pass
+
+        winner = game.get_winner()
+        if winner:
+            message = f"{winner.name} wins!🎉"
+            game.is_played = False
+            # Clear the game data from the session as the game is over
+            session.pop('game_data', None)
+        elif not game.board.available_cells():
+            message = "The game is a draw!"
+            game.is_played = False
+            # Clear the game data from the session as the game is over
+            session.pop('game_data', None)
+
+        # Game isn't over, save the updated state in the session
+        if game.is_played:
+            session['game_data'] = game.to_dict()
+            
+    return render_template('play.html', game=game, message=message, error=error)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
