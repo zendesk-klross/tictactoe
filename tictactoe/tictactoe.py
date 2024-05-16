@@ -63,7 +63,11 @@ class TicTacToe:
     def to_dict(self):
         """Serialize data structures to json for Flask."""
         return {
-            'board': self.board.grid.tolist(),
+            'board': {
+                'col': self.board.col,
+                'row': self.board.row,
+                'grid': self.board.grid.tolist()
+            },
             'player1': {'token': self.player1.token, 'name': self.player1.name, 'human': self.player1.human},
             'player2': {'token': self.player2.token, 'name': self.player2.name, 'human': self.player2.human},
             'turn': self.turn
@@ -72,8 +76,8 @@ class TicTacToe:
     @staticmethod
     def from_dict(data, io):
         """Deserialize data structures from json."""
-        board = Board()
-        board.grid = np.array(data['board'])
+        board = Board(col=data['board']['col'], row = data['board']['row'])
+        board.grid = np.array(data['board']['grid'])
         player1 = Player(**data['player1'])
         player2 = Player(**data['player2'])
         turn = data['turn']
