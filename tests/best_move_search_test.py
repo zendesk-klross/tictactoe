@@ -102,7 +102,26 @@ class TestBestMoveSearch:
         assert self.best_move_search._number_of_visits == 3
         assert self.best_move_search._results[0] == 1
 
+    def test_best_child(self):
+        # Make a move to have some children
+        child_node1 = self.best_move_search.expand()
+        child_node1._results[1] = 3
+        child_node1._results[-1] = 1
+        child_node1._number_of_visits = 10
 
+        child_node2 = self.best_move_search.expand()
+        child_node2._results[1] = 1
+        child_node2._results[-1] = 3
+        child_node2._number_of_visits = 4
 
+        child_node3 = self.best_move_search.expand()
+        child_node3._results[1] = 3
+        child_node3._results[-1] = 1
+        child_node3._number_of_visits = 4
+
+        best_child = self.best_move_search.best_child()
+        assert best_child == child_node1
+
+        # I still need to figure out how to make it not favour node1 over node3 !!!!!
 
 

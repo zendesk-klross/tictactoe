@@ -67,3 +67,24 @@ class BestMoveSearch:
             self.parent.update_stats(result)
         return
 
+    # "c_param" - a constant, the balance between exploitation
+    # (avg reward of node) and exploration (favouring less-visited
+    # nodes).
+    # The higher c_param, the more exploration, the lower, the
+    # more exploitation. The value 0.1 is sort of arbitrary,
+    # to favour exploration while looking for the best child.
+    # If it's higher, then it will favour the win rate more
+    def best_child(self, c_param=0.1):
+        # epsilon is a small constant to avoid division by zero,
+        # but not affect calculations result
+        epsilon = 1e-6
+        choices_weights = []
+        for child in self.children:
+            if self.times_visited() + epsilon < 1 or child.times_visited() + epsilon < 1:
+                choices_weights.append(0)
+            else:
+                exploitation = child.wins_losses_difference() / (child.times_visited() + epsilon)
+                exploration = c_param * np.sqrt((2 * np.log(self.times_visited() + epsilon) / (child.times_visited() + epsilon)))
+                choices_weights.append(exploitation + exploration)
+
+        return self.children[np.argmax(choices_weights)]
