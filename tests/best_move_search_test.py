@@ -120,8 +120,33 @@ class TestBestMoveSearch:
         child_node3._number_of_visits = 4
 
         best_child = self.best_move_search.best_child()
-        assert best_child == child_node1
+        assert best_child == child_node3
 
-        # I still need to figure out how to make it not favour node1 over node3 !!!!!
+    def test_select_node_for_playthrough(self):
+        # Make a move to have some children
+        child_node1 = self.best_move_search.expand()
+        child_node1._results[1] = 3
+        child_node1._results[-1] = 1
+        child_node1._number_of_visits = 10
 
+        child_node2 = self.best_move_search.expand()
+        child_node2._results[1] = 1
+        child_node2._results[-1] = 3
+        child_node2._number_of_visits = 4
 
+        child_node3 = self.best_move_search.expand()
+        child_node3._results[1] = 10
+        child_node3._results[-1] = 1
+        child_node3._number_of_visits = 11
+
+        selected_node = self.best_move_search.select_node_for_playthrough()
+        print("SELECTED NODE", selected_node.uct_value(), selected_node._number_of_visits)
+
+        # count the exploration + exploitation for each child
+        uct_values = [child.uct_value() for child in self.best_move_search.children]
+        print("UCT VALUES", uct_values)
+
+        # Assert that the selected node has the highest UCT value
+        assert selected_node.uct_value() == max(uct_values)
+
+        # TODO: make number of visits calculate correctly, still incorrect for selected node

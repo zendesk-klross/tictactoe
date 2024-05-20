@@ -1,5 +1,6 @@
 from .board import Board
 from .tictactoe import TicTacToe
+from .constants import EPSILON, C_PARAM
 import numpy as np
 from collections import defaultdict
 
@@ -42,6 +43,8 @@ class BestMoveSearch:
         child_node = BestMoveSearch(self.game,
                                     parent=self,
                                     parent_action=action)
+        self._number_of_visits += 1
+        child_node._number_of_visits += 1
         self.children.append(child_node)
         self.game.board.grid = original_game_state
         return child_node
@@ -67,24 +70,28 @@ class BestMoveSearch:
             self.parent.update_stats(result)
         return
 
-    # "c_param" - a constant, the balance between exploitation
-    # (avg reward of node) and exploration (favouring less-visited
-    # nodes).
-    # The higher c_param, the more exploration, the lower, the
-    # more exploitation. The value 0.1 is sort of arbitrary,
-    # to favour exploration while looking for the best child.
-    # If it's higher, then it will favour the win rate more
-    def best_child(self, c_param=0.1):
-        # epsilon is a small constant to avoid division by zero,
-        # but not affect calculations result
-        epsilon = 1e-6
+    # Upper Confidence Bound for a node
+    def uct_value(self):
+        exploitation = self.wins_losses_difference() / (self.times_visited() + EPSILON)
+        exploration = C_PARAM * np.sqrt((2 * np.log(self.times_visited() + EPSILON) / (self.times_visited() + EPSILON)))
+        return exploitation + exploration
+
+    def best_child(self):
         choices_weights = []
         for child in self.children:
-            if self.times_visited() + epsilon < 1 or child.times_visited() + epsilon < 1:
+            # avoiding division by zero
+            if self.times_visited() + EPSILON < 1 or child.times_visited() + EPSILON < 1:
                 choices_weights.append(0)
             else:
-                exploitation = child.wins_losses_difference() / (child.times_visited() + epsilon)
-                exploration = c_param * np.sqrt((2 * np.log(self.times_visited() + epsilon) / (child.times_visited() + epsilon)))
-                choices_weights.append(exploitation + exploration)
+                choices_weights.append(child.uct_value())
 
         return self.children[np.argmax(choices_weights)]
+
+    def select_node_for_playthrough(self):
+        current_node = self
+        while not current_node.is_terminal_node():
+            if not current_node.is_expanded():
+                return current_node.expand()
+            else:
+                current_node = current_node.best_child()
+        return current_node
