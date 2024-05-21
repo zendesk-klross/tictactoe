@@ -44,7 +44,10 @@ class TicTacToe:
                         move = self.io.input("Your move")
                     else:
                         self.io.progress_bar("Thinking ")
-                        move = random.choice(available_cells)
+                        best_move_search = BestMoveSearch(self)
+                        move = best_move_search.best_move()
+                        print("In game, best move: ", move)
+                        # move = random.choice(available_cells)
                     try:
                         make_move = self.board.make_move(move, self.current_player.token)
                         if make_move:

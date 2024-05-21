@@ -87,6 +87,7 @@ class BestMoveSearch:
 
         return self.children[np.argmax(choices_weights)]
 
+    # Tree policy
     def select_node_for_playthrough(self):
         current_node = self
         while not current_node.is_terminal_node():
@@ -95,3 +96,14 @@ class BestMoveSearch:
             else:
                 current_node = current_node.best_child()
         return current_node
+
+    def best_move(self):
+        simulation_no = 100
+
+        for i in range(simulation_no):
+            node = self.select_node_for_playthrough()
+            reward = node.simulate_playthrough()
+            node.update_stats(reward)
+
+        print("Best move is: ", self.best_child())
+        return self.best_child()
