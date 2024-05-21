@@ -1,13 +1,16 @@
 from .board import Board
-from .tictactoe import TicTacToe
 from .constants import EPSILON, C_PARAM
 import numpy as np
 from collections import defaultdict
 
 
 class BestMoveSearch:
-    def __init__(self, game=TicTacToe, parent=None, parent_action=None):
-        self.game = game
+    def __init__(self, board=Board, parent=None, parent_action=None, token1='X', token2='O', turn=0):
+        self.board = board
+        self.token1 = token1
+        self.token2 = token2
+        self.turn = turn
+        self.current_token = self.token1 if self.turn == 0 else self.token2
         self.parent = parent
         self.parent_action = parent_action
         self.children = []
@@ -19,11 +22,11 @@ class BestMoveSearch:
         return
 
     def untried_actions(self):
-        self._untried_actions = self.game.board.available_cells()
+        self._untried_actions = self.board.available_cells()
         return self._untried_actions
 
     def is_terminal_node(self):
-        return self.game.is_game_over()
+        return self.is_game_over()
 
     def wins_losses_difference(self):
         wins = self._results[1]
@@ -36,17 +39,17 @@ class BestMoveSearch:
     # Populate list of child nodes with all possible moves
     def expand(self):
         action = self._untried_actions.pop()
-        original_game_state = self.game.board.grid.copy()
+        original_game_state = self.board.grid.copy()
 
-        self.game.board.make_move(action, self.game.current_player.token)
+        self.board.make_move(action, self.current_token)
 
-        child_node = BestMoveSearch(self.game,
+        child_node = BestMoveSearch(self.board,
                                     parent=self,
                                     parent_action=action)
         self._number_of_visits += 1
         child_node._number_of_visits += 1
         self.children.append(child_node)
-        self.game.board.grid = original_game_state
+        self.board.grid = original_game_state
         return child_node
 
     def is_expanded(self):
@@ -55,11 +58,11 @@ class BestMoveSearch:
     # this is the "rollout" of the game. I am calling it so
     # to better understand what I am doing
     def simulate_playthrough(self):
-        current_board = self.game.board
-        while not self.game.is_game_over():
+        current_board = self.board
+        while not self.is_game_over():
             available_cells = current_board.available_cells()
             move = np.random.choice(available_cells)
-            current_board = current_board.make_move(move, self.game.current_player.token)
+            current_board = current_board.make_move(move, self.current_token)
         return current_board.check_winner("X", "O")
 
     # Backpropagate the result of the game to the root node
@@ -107,3 +110,10 @@ class BestMoveSearch:
 
         print("Best move is: ", self.best_child())
         return self.best_child()
+
+    def is_game_over(self):
+        winner = self.board.check_winner(self.token1, self.token2)
+        if (winner or not self.board.available_cells()): return True
+        else: return False
+
+

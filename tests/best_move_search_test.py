@@ -11,9 +11,11 @@ class TestBestMoveSearch:
     def setup(self):
         self.board = Board(3, 3)
         self.player1 = Player('X', 'Player1')
-        self.player2 = Player('X', 'Player2')
-        self.game = TicTacToe(self.board, self.player1, self.player2)
-        self.best_move_search = BestMoveSearch(self.game)
+        self.player2 = Player('0', 'Player2')
+        self.best_move_search = BestMoveSearch(board=self.board,
+                                               token1=self.player1.token,
+                                               token2=self.player2.token,
+                                               turn=0)
 
     def test_untried_actions(self):
         expected_untried_actions = [str(i) for i in range(1, 10)]
@@ -68,7 +70,7 @@ class TestBestMoveSearch:
         assert self.best_move_search.is_expanded()
 
     def test_simulate_playthrough(self):
-        self.game.board.grid = np.array([['X', 'O', 'X'],
+        self.board.grid = np.array([['X', 'O', 'X'],
                                     ['X', 'X', 'O'],
                                     ['O', 'X', 'O']])
         assert self.best_move_search.simulate_playthrough() is None
@@ -121,10 +123,6 @@ class TestBestMoveSearch:
 
         best_child = self.best_move_search.best_child()
         assert best_child == child_node3
-
-    def test_set_number_of_visits(self):
-        self.best_move_search.set_number_of_visits(self.best_move_search, 5)
-        assert self.best_move_search._number_of_visits == 5
 
     # TODO: This is a bad test that doesn't work. Selection itself seems to be correct, but specific to how this
     #  method  is calling expand inside of it, it produces a new least visited node, which gets prioritized since

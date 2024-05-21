@@ -55,4 +55,3 @@ class Board:
 
         # No winner yet
         return None
-

@@ -4,6 +4,7 @@ from .board import Board
 from .player import Player
 from .iohandler import IOHandler
 from .errors import *
+from .best_move_search import BestMoveSearch
 
 class TicTacToe:
 
@@ -44,7 +45,10 @@ class TicTacToe:
                         move = self.io.input("Your move")
                     else:
                         self.io.progress_bar("Thinking ")
-                        best_move_search = BestMoveSearch(self)
+                        best_move_search = BestMoveSearch(board=self.board,
+                                                          token1=self.player1.token,
+                                                          token2=self.player2.token,
+                                                          turn=self.turn)
                         move = best_move_search.best_move()
                         print("In game, best move: ", move)
                         # move = random.choice(available_cells)
@@ -66,11 +70,3 @@ class TicTacToe:
             return -1
         else:
             return None
-
-    # This is for simulation purposes, so that playouts can happen
-    # without exiting the game
-    def is_game_over(self):
-        winner = self.board.check_winner(self.player1.token, self.player2.token)
-        if (winner or not self.board.available_cells()): return True
-        else: return False
-
