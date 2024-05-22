@@ -93,6 +93,4 @@ if __name__ == '__main__':
 # TODO
 # Add computer player logic to play function
 # Refactor play function - avoid code duplication from tictactoe class
-# Pretty board display
-# Select cells instead of inputing a move
 

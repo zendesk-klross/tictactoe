@@ -17,12 +17,14 @@
 <body>
     <h1>Play Tic-Tac-Toe</h1>
     <div id="board" style="--num-cols: {{ game.board.col }};">
-        <!-- Generate the board dynamically based on the grid -->
+        <!-- Generate the board based on the grid -->
         {% for row in range(game.board.row) %}
             <div class="board-row">
                 {% for col in range(game.board.col) %}
-                    <div class="board-cell" onclick="cellClicked({{ row }}, {{ col }})">
-                        {{ game.board.grid[row][col] }}
+                    <div class="board-cell" id="cell-{{ row }}-{{ col }}" onclick="cellClicked({{ row }}, {{ col }})">
+                        {% if game.board.grid[row][col] in ['X', 'O'] %}
+                            {{ game.board.grid[row][col] }}
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
