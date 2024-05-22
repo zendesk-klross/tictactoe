@@ -1,0 +1,24 @@
+/* static/style.css */
+#board {
+    display: grid;
+    grid-template-columns: repeat(var(--num-cols), 1fr); /* Creates a grid with a dynamic number of columns */
+    grid-auto-rows: 1fr; /* Each row takes up an equal fraction of the available space */
+    gap: 10px; /* Space between cells */
+    width: max-content; /* The width of the grid is determined by the content */
+    margin: 20px auto;
+}
+
+.board-cell {
+    background-color: #fff;
+    border: 2px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+    aspect-ratio: 1 / 1; /* Keeps the cell square regardless of the size */
+}
+
+.board-cell:hover {
+    background-color: #e3e3e3;
+}

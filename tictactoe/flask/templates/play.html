@@ -1,0 +1,37 @@
+<!-- templates/play.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function cellClicked(row, col) {
+            // Send the row and column to the server using a form submission
+            document.getElementById('move-row').value = row;
+            document.getElementById('move-col').value = col;
+            document.getElementById('move-form').submit();
+        }
+    </script>
+</head>
+<body>
+    <h1>Play Tic-Tac-Toe</h1>
+    <div id="board" style="--num-cols: {{ game.board.col }};">
+        <!-- Generate the board dynamically based on the grid -->
+        {% for row in range(game.board.row) %}
+            <div class="board-row">
+                {% for col in range(game.board.col) %}
+                    <div class="board-cell" onclick="cellClicked({{ row }}, {{ col }})">
+                        {{ game.board.grid[row][col] }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Hidden form to submit the move -->
+    <form id="move-form" method="post" action="{{ url_for('play') }}" style="display: none;">
+        <input type="hidden" id="move-row" name="move_row">
+        <input type="hidden" id="move-col" name="move_col">
+    </form>
+</body>
+</html>

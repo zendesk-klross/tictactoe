@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask, render_template, request, redirect, url_for, session
 from tictactoe import TicTacToe
 from board import Board
@@ -45,8 +47,12 @@ def play():
     error = None
 
     if request.method == 'POST':
-        move = request.form.get('move')
-        current_player = game.player2 if game.turn else game.player1
+        row = request.form.get('move_row')
+        col = request.form.get('move_col')
+        if row is not None and col is not None:
+            row, col = int(row), int(col)
+            move = str(row * game.board.col + col + 1)
+            current_player = game.player2 if game.turn else game.player1
 
         if current_player.human:
             if move and move.isdigit() and move in game.board.available_cells():
