@@ -1,25 +1,37 @@
+<!-- templates/setup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Setup Game</title>
+    <!-- Include your CSS file if needed -->
 </head>
 <body>
     <h1>Setup Tic-Tac-Toe Game</h1>
     <form method="post" action="{{ url_for('setup') }}">
-
+        <!-- Player 1 Type Selection -->
         <label for="player1_type">Player 1 Type:</label>
         <select id="player1_type" name="player1_type" required>
             <option value="human">Human</option>
             <option value="computer">Computer</option>
         </select>
 
+        <!-- Player 1 Name Input -->
+        <label for="player1_name">Player 1 Name:</label>
+        <input type="text" id="player1_name" name="player1_name" placeholder="Enter Player 1 Name" required>
+
+        <!-- Player 2 Type Selection -->
         <label for="player2_type">Player 2 Type:</label>
         <select id="player2_type" name="player2_type" required>
             <option value="human">Human</option>
             <option value="computer">Computer</option>
         </select>
 
+        <!-- Player 2 Name Input -->
+        <label for="player2_name">Player 2 Name:</label>
+        <input type="text" id="player2_name" name="player2_name" placeholder="Enter Player 2 Name" required>
+
+        <!-- Board Size Selection -->
         <label for="board_size">Board Size:</label>
         <select id="board_size" name="board_size" required>
             <option value="3">3x3</option>

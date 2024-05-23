@@ -1,0 +1,16 @@
+<!-- templates/game_over.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Over - Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-over-container">
+        <h1>Game Over</h1>
+        <p class="game-result-message">{{ message }}</p>
+        <a href="{{ url_for('index') }}" class="new-game-button">Start a New Game</a>
+    </div>
+</body>
+</html>

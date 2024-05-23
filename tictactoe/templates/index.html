@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <pre class="hero-text">{{ hero_text }}</pre>
+        <a href="{{ url_for('setup') }}" class="start-game-button">Start Game</a>
+    </div>
+</body>
+</html>
