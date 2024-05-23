@@ -55,3 +55,8 @@ class Board:
 
         # No winner yet
         return None
+
+    def copy(self):
+        new_board = Board(self.col, self.row)
+        new_board.grid = self.grid.copy()
+        return new_board

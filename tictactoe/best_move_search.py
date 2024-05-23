@@ -5,12 +5,13 @@ from collections import defaultdict
 
 
 class BestMoveSearch:
-    def __init__(self, board=Board, parent=None, parent_action=None, token1='X', token2='O', turn=0):
+    def __init__(self, board=Board, parent=None, parent_action=None, token1='X', token2='O', current_token='X', turn=0):
         self.board = board
+        self._simulation_board = self.board.copy()
         self.token1 = token1
         self.token2 = token2
         self.turn = turn
-        self.current_token = self.token1 if self.turn == 0 else self.token2
+        self.current_token = current_token
         self.parent = parent
         self.parent_action = parent_action
         self.children = []
@@ -22,7 +23,7 @@ class BestMoveSearch:
         return
 
     def untried_actions(self):
-        self._untried_actions = self.board.available_cells()
+        self._untried_actions = self._simulation_board.available_cells()
         return self._untried_actions
 
     def is_terminal_node(self):
@@ -39,17 +40,19 @@ class BestMoveSearch:
     # Populate list of child nodes with all possible moves
     def expand(self):
         action = self._untried_actions.pop()
-        original_game_state = self.board.grid.copy()
+        new_simulation_board = self._simulation_board.copy()
+        new_simulation_board.make_move(action, self.current_token)
 
-        self.board.make_move(action, self.current_token)
-
-        child_node = BestMoveSearch(self.board,
+        child_node = BestMoveSearch(new_simulation_board,
                                     parent=self,
-                                    parent_action=action)
+                                    parent_action=action,
+                                    token1=self.token1,
+                                    token2=self.token2,
+                                    current_token = self.token2 if self.current_token == self.token1 else self.token1,
+                                    turn=1 if self.turn == 0 else 0)
         self._number_of_visits += 1
         child_node._number_of_visits += 1
         self.children.append(child_node)
-        self.board.grid = original_game_state
         return child_node
 
     def is_expanded(self):
@@ -58,12 +61,16 @@ class BestMoveSearch:
     # this is the "rollout" of the game. I am calling it so
     # to better understand what I am doing
     def simulate_playthrough(self):
-        current_board = self.board
+        current_board = self._simulation_board
+        current_token = self.current_token
         while not self.is_game_over():
             available_cells = current_board.available_cells()
             move = np.random.choice(available_cells)
-            current_board = current_board.make_move(move, self.current_token)
-        return current_board.check_winner("X", "O")
+            current_board.make_move(move, current_token)
+            current_token = self.token2 if current_token == self.token1 else self.token1
+
+
+        return current_board.check_winner(self.token1, self.token2)
 
     # Backpropagate the result of the game to the root node
     def update_stats(self, result):
@@ -101,19 +108,22 @@ class BestMoveSearch:
         return current_node
 
     def best_move(self):
-        simulation_no = 100
+        simulation_no = 1000
 
         for i in range(simulation_no):
+            if self.is_game_over(): break
             node = self.select_node_for_playthrough()
             reward = node.simulate_playthrough()
             node.update_stats(reward)
+            self.current_token = self.token2 if self.current_token == self.token1 else self.token1
+            self.turn = 0 if self.turn else 1
 
-        print("Best move is: ", self.best_child())
-        return self.best_child()
+        best_child = self.best_child()
+        return str(best_child.parent_action)
 
     def is_game_over(self):
-        winner = self.board.check_winner(self.token1, self.token2)
-        if (winner or not self.board.available_cells()): return True
+        winner = self._simulation_board.check_winner(self.token1, self.token2)
+        if (winner or not self._simulation_board.available_cells()): return True
         else: return False
 
 

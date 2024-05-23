@@ -48,14 +48,15 @@ class TicTacToe:
                         best_move_search = BestMoveSearch(board=self.board,
                                                           token1=self.player1.token,
                                                           token2=self.player2.token,
-                                                          turn=self.turn)
+                                                          turn=self.turn,
+                                                          current_token=self.current_player.token)
                         move = best_move_search.best_move()
-                        print("In game, best move: ", move)
                         # move = random.choice(available_cells)
                     try:
                         make_move = self.board.make_move(move, self.current_player.token)
                         if make_move:
                             self.turn = 0 if self.turn else 1
+                            self.current_player = self.player2 if self.turn else self.player1
                             break
                     except InvalidMoveError as e:
                         error = str(e)
