@@ -1,46 +1,48 @@
-<!-- templates/setup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Setup Game</title>
-    <!-- Include your CSS file if needed -->
+    <title>Setup Tic-Tac-Toe Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Setup Tic-Tac-Toe Game</h1>
-    <form method="post" action="{{ url_for('setup') }}">
-        <!-- Player 1 Type Selection -->
-        <label for="player1_type">Player 1 Type:</label>
-        <select id="player1_type" name="player1_type" required>
-            <option value="human">Human</option>
-            <option value="computer">Computer</option>
-        </select>
-
-        <!-- Player 1 Name Input -->
-        <label for="player1_name">Player 1 Name:</label>
-        <input type="text" id="player1_name" name="player1_name" placeholder="Enter Player 1 Name" required>
-
-        <!-- Player 2 Type Selection -->
-        <label for="player2_type">Player 2 Type:</label>
-        <select id="player2_type" name="player2_type" required>
-            <option value="human">Human</option>
-            <option value="computer">Computer</option>
-        </select>
-
-        <!-- Player 2 Name Input -->
-        <label for="player2_name">Player 2 Name:</label>
-        <input type="text" id="player2_name" name="player2_name" placeholder="Enter Player 2 Name" required>
-
-        <!-- Board Size Selection -->
-        <label for="board_size">Board Size:</label>
-        <select id="board_size" name="board_size" required>
-            <option value="3">3x3</option>
-            <option value="5">5x5</option>
-            <option value="7">7x7</option>
-            <option value="10">10x10</option>
-        </select>
-
-        <input type="submit" value="Start Game">
-    </form>
+    <div class="setup-container">
+        <h1>Setup Tic-Tac-Toe Game</h1>
+        <form method="post" action="{{ url_for('setup') }}" class="setup-form">
+            <div class="player-section">
+                <!--Player 1 -->
+                <h2>Player 1</h2>
+                <div class="input-group">
+                    <select id="player1_type" name="player1_type" required>
+                        <option value="human">Human</option>
+                        <option value="computer">Computer</option>
+                    </select>
+                    <input type="text" id="player1_name" name="player1_name" placeholder="Enter Player 1 Name" required>
+                </div>
+            </div>
+            <!--Player 2 -->
+            <div class="player-section">
+                <h2>Player 2</h2>
+                <div class="input-group">
+                    <select id="player2_type" name="player2_type" required>
+                        <option value="human">Human</option>
+                        <option value="computer">Computer</option>
+                    </select>
+                    <input type="text" id="player2_name" name="player2_name" placeholder="Enter Player 2 Name" required>
+                </div>
+            </div>
+            <!-- Board Size Selection -->
+            <div class="form-group">
+                <h2>Board Size</h2>
+                <select id="board_size" name="board_size" required>
+                    <option value="3">3x3</option>
+                    <option value="5">5x5</option>
+                    <option value="7">7x7</option>
+                    <option value="10">10x10</option>
+                </select>
+            </div>
+            <input type="submit" value="Start Game" class="start-game-button">
+        </form>
+    </div>
 </body>
 </html>

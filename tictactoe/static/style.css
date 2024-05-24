@@ -30,3 +30,11 @@ body {
 .board-cell:hover {
     background-color: #e3e3e3;
 }
+
+.form_group {
+    margin-bottom: 30px;
+}
+
+.start-game-button{
+    margin-top: 30px;
+}
