@@ -1,0 +1,40 @@
+/* static/style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding-top: 50px;
+    margin: 0;
+    background-color: #f7f7f7;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(var(--num-cols), auto);
+    gap: 5px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.board-cell {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border: 2px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.board-cell:hover {
+    background-color: #e3e3e3;
+}
+
+.form_group {
+    margin-bottom: 30px;
+}
+
+.start-game-button{
+    margin-top: 30px;
+}
