@@ -28,7 +28,7 @@ class TicTacToe:
                 elif winner.name == "Player":
                     self.io.output(f"You win!🎉")
                 else:
-                    self.io.output(f"{winner.name} wins!🎉")
+                    self.io.output(f"{winner.name} wins! 🎉")
                 self.is_played = False
             else:
                 while True:
