@@ -51,7 +51,7 @@ class Board:
 
         # Check for a tie (no numbers left, meaning all cells are filled with 'X' or 'O')
         if not np.any([cell.isdigit() for cell in self.grid.flatten()]):
-            return None
+            return -1
 
         # No winner yet
         return None

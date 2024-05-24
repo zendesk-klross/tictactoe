@@ -15,8 +15,8 @@ def startup(io=IOHandler()):
     io.output_from_file("tictactoe/assets/hero_text.txt")
 
     while True:
-        io.output("Player1 is {}".format(player1.name if player1 else "Player"))
-        io.output("Player2 is {}".format(player2.name if player2 else "Computer"))
+        io.output("Player1 is {}".format(player1.name if player1 else "👤Player"))
+        io.output("Player2 is {}".format(player2.name if player2 else "🤖Computer"))
         player_choice = io.input_options("Press space for options > ", STARTUP_OPTS).strip()
 
         # EXIT
@@ -41,23 +41,23 @@ def startup(io=IOHandler()):
             game_mode = io.input_options("Select game mode: ", GAME_MODE_OPTS).strip()
             # Computer VS Computer
             if game_mode == GAME_MODE_OPTS[2]:
-                player1 = Player("X", "Computer1", human=False)
-                player2 = Player("O", "Computer2", human=False)
+                player1 = Player("X", "🤖Computer1", human=False)
+                player2 = Player("O", "🤖Computer2", human=False)
                 continue
             # Player VS Computer
             elif game_mode == GAME_MODE_OPTS[1]:
                 name = io.input("Enter your name")
-                token = io.input("Select your token(X, 0)").strip().upper()
+                token = io.input("Select your token").strip().upper()
 
                 if not token: token = "X"
-                if not name: name = "Player"
+                if not name: name = "👤Player"
 
                 if token == "O":
-                    player1 = Player("X", "Computer", human=False)
+                    player1 = Player("X", "🤖Computer", human=False)
                     player2 = Player(token, name, human=True)
                 else:
                     player1 = Player(token, name, human=True)
-                    player2 = Player("O", "Computer", human=False)
+                    player2 = Player("O", "🤖Computer", human=False)
             # Player VS Player
             elif game_mode == GAME_MODE_OPTS[0]:
                 name1 = io.input("Enter Player1 name")
@@ -65,8 +65,8 @@ def startup(io=IOHandler()):
                 name2 = io.input("Enter Player2 name")
                 token2 = io.input("Select Player2 token").strip().upper()
 
-                if not name1: name1 = "Player1"
-                if not name2: name2 = "Player2"
+                if not name1: name1 = "👤Player1"
+                if not name2: name2 = "👤Player2"
                 if not token1: token1 = "X"
                 if not token2: token2 = "O"
 
@@ -83,9 +83,9 @@ def startup(io=IOHandler()):
             if not board_width or not board_height:
                 board_width, board_height = 3, 3
             if not player1:
-                player1 = Player("X", "Player", human=True)
+                player1 = Player("X", "👤Player", human=True)
             if not player2:
-                player2 = Player("O", "Computer", human=False)
+                player2 = Player("O", "🤖Computer", human=False)
 
         board = Board(int(board_height), int(board_width))
         game = TicTacToe(board, player1, player2, io)
