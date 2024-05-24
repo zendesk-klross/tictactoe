@@ -1,8 +1,8 @@
-from tictactoe import TicTacToe
-from board import Board
-from player import Player
-from iohandler import IOHandler
-from constants import *
+from tictactoe.tictactoe import TicTacToe
+from tictactoe.board import Board
+from tictactoe.player import Player
+from tictactoe.iohandler import IOHandler
+from tictactoe.constants import *
 import os
 
 def startup(io=IOHandler()):
@@ -105,5 +105,6 @@ startup()
 #       > Different rules for non-square boards?
 # 4. Error handling on input
 #   - When press Enter, exits the programme
-# 6. Add tests
+# 6. Remove the TicTacToe import dependency from BestMoveSearch, bring
+#    the board dependency back.
 

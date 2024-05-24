@@ -1,6 +1,6 @@
 import numpy as np
 from typing import Optional
-from errors import *
+from .errors import InvalidMoveError
 
 
 class Board:
@@ -28,7 +28,7 @@ class Board:
             position = np.where(self.grid == move)
             if len(position[0]) > 0:
                 self.grid[position] = token
-                return True
+                return self
             else:
                 raise InvalidMoveError('That cell is already occupied.')
         else:
@@ -49,9 +49,14 @@ class Board:
         if np.all(np.diag(self.grid) == token2) or np.all(np.diag(np.fliplr(self.grid)) == token2):
             return token2
 
-        # Check for a tie (no numbers left, meaning all cells are filled with 'X' or 'O')
+        # Check for a tie (no numbers left, meaning all cells are filled)
         if not np.any([cell.isdigit() for cell in self.grid.flatten()]):
             return -1
 
         # No winner yet
         return None
+
+    def copy(self):
+        new_board = Board(self.col, self.row)
+        new_board.grid = self.grid.copy()
+        return new_board

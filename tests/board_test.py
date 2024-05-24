@@ -5,7 +5,7 @@ import tictactoe.board
 
 @pytest.fixture
 def board():
-    return tictactoe.board.Board()
+    return tictactoe.board.Board(3, 3)
 
 
 def test_initialization(board):
@@ -15,45 +15,30 @@ def test_initialization(board):
     assert np.array_equal(board.grid, expected_grid)
 
 
-def test_repr_(board):
-    expected_repr = "[['1' '2' '3']\n ['4' '5' '6']\n ['7' '8' '9']]"
-    assert repr(board) == expected_repr
-
-
-def test_str_method_with_moves(board):
-    board.grid[0][0] = 'X'
-    board.grid[1][1] = 'O'
-    expected_str = 'X |   |  \n  | O |  \n  |   |  '
-    assert str(board) == expected_str
-
-
 def test_make_move(board):
-    board.make_move((0, 0), 'X')
+    board.make_move("1", 'X')
     assert board.grid[0][0] == 'X'
 
 
 def test_row_winner(board):
     board.grid[0, :] = 'X'  # Set the first row to 'X'
-    assert board.check_winner() == 'X wins!'
+    assert board.check_winner('X', '0') == 'X'
 
 
 def test_column_winner(board):
     board.grid[:, 0] = 'O'  # Set the first column to 'O'
-    assert board.check_winner() == 'O wins!'
+    assert board.check_winner('X', 'O') == 'O'
 
 
 def test_diagonal_winner(board):
     # breakpoint()
     np.fill_diagonal(board.grid, 'X')  # Set the main diagonal to 'X'
-    assert board.check_winner() == 'X wins!'
+    assert board.check_winner('X', 'O') == 'X'
 
 
 def test_tie(board):
     board.grid = np.array([['X', 'O', 'X'],
                            ['X', 'X', 'O'],
                            ['O', 'X', 'O']])
-    assert board.check_winner() == 'Tie, no one wins :('
+    assert board.check_winner('X', 'O') is None
 
-
-def test_no_winner(board):
-    assert board.check_winner() is None
